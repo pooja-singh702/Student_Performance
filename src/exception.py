@@ -23,8 +23,8 @@
 
 # it helps to generate more detailed message from error u get from exception class
 import sys
-#from src import exception
-import logging
+from src.logger import logging
+#import logging
 
 def error_message_detail(error, error_detail:sys):
 
