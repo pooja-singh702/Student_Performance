@@ -70,17 +70,24 @@ Step5:
 
 ```
 AWS Beanstalk:
-AWS Elastic Beanstalk(instance) is a fully managed service that simplifies the deployment and scaling of web applications. It supports multiple programming languages and platforms, allowing developers to focus on writing code without worrying about the underlying infrastructure. With features like automatic scaling, load balancing, and integrated monitoring, Elastic Beanstalk ensures high availability and performance. Customization options, such as the use of .ebextensions, enable you to tailor the environment to your application's specific needs, making it an ideal choice for rapid deployment.
+AWS Elastic Beanstalk(instance) is a fully managed service that simplifies the deployment and scaling of web applications. It is actually an server of some instance like linux machine where you can deploy web here. It supports multiple programming languages and platforms, allowing developers to focus on writing code without worrying about the underlying infrastructure. With features like automatic scaling, load balancing, and integrated monitoring, Elastic Beanstalk ensures high availability and performance. Customization options, such as the use of .ebextensions, enable you to tailor the environment to your application's specific needs, making it an ideal choice for rapid deployment.
 ```
 
 ```
 Settings Before deploying from m local env(set as venv python = 3.8):
 
 ```
-Requirements for deploymnet:
+Requirements for deploymnet in AWS Beanstalk:
 
 1. .ebextensions : Under this, create python.config which contains WSGI path to tell how to use now app.py ie not to run locally here but run on beanstalk globally.
-2. 
+
+2. Instead of using app.py for flask server and routing defination, rename as application.py 
+
+3. create flask obj as application only. application = Flask(__name__)
+4. Remove debug = true if given inside while running flask as app.run(host)
+5. Add to git 
+
+
 ```
 ```
 
@@ -102,7 +109,7 @@ Environment Configuration: Within these files, I can define environment variable
 
 WSGI Configuration: By specifying the wsgi_path in the configuration, I indicate to Elastic Beanstalk where to find the WSGI application callable (e.g., app:app): code under python.config: option_settings:
   aws:elasticbeanstalk:application:environment:
-  WSGI_PATH: app:application  # This points to your WSGI callable
+  WSGI_PATH: application:application  # This points to your WSGI callable, where fisrt application name is applictaion.py instead of app.py created and then add all contents od app.y to application.py as its requiremnet here. Second one application is obj u created as application = Flask(__name__)
 
 This tells Beanstalk to use the Flask application defined in app.py to handle incoming requests.
 Instead of calling app.run() locally, this configuration directs Elastic Beanstalk to manage the server, allowing the application to run in a global, scalable environment.
@@ -125,3 +132,13 @@ Thus, using .ebextensions, I not only set the necessary environment for my appli
 5. Global Accessibility: Rather than running app.run() locally, Elastic Beanstalk manages the server infrastructure, making my application globally accessible via a public URL. This allows users from anywhere to interact with the application, vastly expanding its reach and usability.
 ```
 
+```
+"Process of deployment from git hub to Elastic Beanstalk using CODE PIPELINE."
+step 1: aws beanstalk instance ie in linux
+step2: then create env
+step 3: create code pipeline and integrate with our code repository
+step4: then deploy on Beanstaak
+step5: create aws and got beanstalk. and create application.
+
+Any change in code, it wil ask for deploying  on beanstalk. This pipeline is continous delivery pipeline.
+```
