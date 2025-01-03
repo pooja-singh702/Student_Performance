@@ -1,7 +1,7 @@
 ### END TO END ML PROJECT FINAL
 
-Step1:
-step2: Train test and pipeline building
+
+step: Train test and pipeline building
 
 ```
 step3: Testing and Debugging:
